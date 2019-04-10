@@ -5,7 +5,6 @@ const ErrorHandler = {
 
   handle(handlerInput, error) {
     console.log(`~~~~ Error handled: ${error.message}`);
-    console.log(`~~~~~~ Stack: ${error.stack}`);
     const speechText = `Sorry, I couldn't understand what you said. Please try again.`;
 
     return handlerInput.responseBuilder

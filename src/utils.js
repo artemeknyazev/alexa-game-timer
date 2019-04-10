@@ -1,4 +1,5 @@
 const { INTENT_REQUEST } = require('./constants')
+const humanizeDuration = require('humanize-duration')
 
 /**
  * Factory for the `canHandle` function of a request handler
@@ -47,10 +48,33 @@ function getSlots(handlerInput) {
   }, {})
 }
 
+/**
+ * Convert milliseconds to a human-understanable time interval string
+ *
+ * @param {number} ms The number of milliseconds to convert to an interval
+ * @returns {string} A time interval string
+ */
+function msToHuman(ms) {
+  // strip milliseconds
+  const interval = Math.round(ms / 1000) * 1000
+  return humanizeDuration(
+    interval,
+    {
+      largest: 2,
+      delimiter: ' and ',
+      units: [ 'h', 'm', 's' ],
+      round: true,
+      language: 'en',
+      fallbacks: [ 'en' ],
+    }
+  )
+}
+
 module.exports = {
   canHandleRequest,
   canHandleIntentRequest,
 
   getUserId,
   getSlots,
+  msToHuman,
 }

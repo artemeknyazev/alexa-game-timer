@@ -1,5 +1,5 @@
-const { INTENT_REQUEST } = require('../constants')
-const { canHandleRequest } = require('../utils')
+const { INTENT_REQUEST } = require('../../constants')
+const { canHandleRequest } = require('../../utils')
 
 const DebugHandler = {
   canHandle: canHandleRequest(INTENT_REQUEST),

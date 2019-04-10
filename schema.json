@@ -33,7 +33,7 @@
           ]
         },
         {
-          "name": "LogEndTimeIntent",
+          "name": "PauseTurnIntent",
           "slots": [
             {
               "name": "color",
@@ -41,6 +41,12 @@
             }
           ],
           "samples": [
+            "turn finish",
+            "turn end",
+            "turn stop",
+            "end turn",
+            "finish turn",
+            "stop turn",
             "stop {color} time",
             "stop {color} player time",
             "stop {color} turn",
@@ -68,7 +74,7 @@
           ]
         },
         {
-          "name": "LogStartTimeIntent",
+          "name": "StartTurnIntent",
           "slots": [
             {
               "name": "color",
@@ -95,7 +101,7 @@
           ]
         },
         {
-          "name": "GetTimeIntent",
+          "name": "GetPlayerTotalTimeIntent",
           "slots": [
             {
               "name": "color",
@@ -117,7 +123,7 @@
           ]
         },
         {
-          "name": "GetAllTimeIntent",
+          "name": "GetAllPlayersTotalTimeIntent",
           "slots": [],
           "samples": [
             "tell all time",
@@ -133,9 +139,20 @@
           ]
         },
         {
-          "name": "ClearAllTimeIntent",
+          "name": "NewGameIntent",
           "slots": [],
           "samples": [
+            "stop session",
+            "end session",
+            "game clear",
+            "clear game",
+            "time stop",
+            "game remove",
+            "game finish",
+            "game stop",
+            "finish game",
+            "stop game",
+            "new game",
             "remove time",
             "clear time",
             "remove all",
@@ -144,6 +161,26 @@
             "end game session",
             "remove all time",
             "clear all time"
+          ]
+        },
+        {
+          "name": "GetCurrentTurnTimeIntent",
+          "slots": [],
+          "samples": [
+            "what is current turn",
+            "whose turn",
+            "whose turn is it",
+            "what is happening"
+          ]
+        },
+        {
+          "name": "ContinueTurnIntent",
+          "slots": [],
+          "samples": [
+            "unpause",
+            "continue",
+            "unpause turn",
+            "continue turn"
           ]
         }
       ],
@@ -222,7 +259,7 @@
     "dialog": {
       "intents": [
         {
-          "name": "GetTimeIntent",
+          "name": "GetPlayerTotalTimeIntent",
           "confirmationRequired": false,
           "prompts": {},
           "slots": [

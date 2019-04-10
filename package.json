@@ -8,10 +8,11 @@
   "dependencies": {
     "ask-sdk-core": "^2.0.7",
     "ask-sdk-model": "^1.4.1",
-    "aws-sdk": "^2.326.0"
+    "aws-sdk": "^2.326.0",
+    "humanize-duration": "^3.18.0"
   },
   "scripts": {
-    "publish-lamda": "./scripts/publish-lambda.sh",
+    "publish-lambda": "./scripts/publish-lambda.sh",
     "test": "jest"
   },
   "keywords": [

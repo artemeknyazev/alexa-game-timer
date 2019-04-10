@@ -1,5 +1,5 @@
-const { CANCEL_INTENT, STOP_INTENT } = require('../constants')
-const { canHandleIntentRequest } = require('../utils')
+const { CANCEL_INTENT, STOP_INTENT } = require('../../constants')
+const { canHandleIntentRequest } = require('../../utils')
 
 const CancelAndStopIntentHandler = {
   canHandle: canHandleIntentRequest(CANCEL_INTENT, STOP_INTENT),

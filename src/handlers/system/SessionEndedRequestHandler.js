@@ -1,5 +1,5 @@
-const { SESSION_ENDED_REQUEST } = require('../constants')
-const { canHandleRequest } = require('../utils')
+const { SESSION_ENDED_REQUEST } = require('../../constants')
+const { canHandleRequest } = require('../../utils')
 
 const SessionEndedRequestHandler = {
   canHandle: canHandleRequest(SESSION_ENDED_REQUEST),

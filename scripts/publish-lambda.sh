@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euf -o pipefail
+set -eu -o pipefail
 
 # This is publishing script for AWS Lambda
 # Call it only from inside of a project folder
@@ -19,3 +19,6 @@ zip -X -r $ZIP_FILE_PATH *
 aws lambda update-function-code \
   --function-name $FUNCTION_NAME \
   --zip-file fileb://$ZIP_FILE_PATH
+
+# Add devDependencies back
+npm i

@@ -2,15 +2,17 @@
 const Alexa = require('ask-sdk-core');
 const {
   CancelAndStopIntentHandler,
-  ClearAllTimeIntentHandler,
+  ContinueTurnIntentHandler,
+  NewGameIntentHandler,
   DebugHandler,
   ErrorHandler,
-  GetAllTimeIntentHandler,
-  GetTimeIntentHandler,
+  GetAllPlayersTotalTimeIntentHandler,
+  GetCurrentTurnTimeIntentHandler,
+  GetPlayerTotalTimeIntentHandler,
   HelpIntentHandler,
   LaunchRequestHandler,
-  LogEndTimeIntentHandler,
-  LogStartTimeIntentHandler,
+  PauseTurnIntentHandler,
+  StartTurnIntentHandler,
   SessionEndedRequestHandler,
 } = require('./handlers');
 
@@ -21,11 +23,13 @@ exports.handler = Alexa.SkillBuilders.custom()
     HelpIntentHandler,
 
     // Application flow
-    GetTimeIntentHandler,
-    GetAllTimeIntentHandler,
-    LogStartTimeIntentHandler,
-    LogEndTimeIntentHandler,
-    ClearAllTimeIntentHandler,
+    GetPlayerTotalTimeIntentHandler,
+    GetCurrentTurnTimeIntentHandler,
+    GetAllPlayersTotalTimeIntentHandler,
+    StartTurnIntentHandler,
+    PauseTurnIntentHandler,
+    ContinueTurnIntentHandler,
+    NewGameIntentHandler,
 
     // Exit&Debug
     CancelAndStopIntentHandler,
