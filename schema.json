@@ -1,0 +1,276 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "game timer",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": [
+            "do not do it",
+            "prevent",
+            "cancel"
+          ]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "how can i do it",
+            "help"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": [
+            "stop"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": [
+            "go home",
+            "home",
+            "back"
+          ]
+        },
+        {
+          "name": "LogEndTimeIntent",
+          "slots": [
+            {
+              "name": "color",
+              "type": "AMAZON.Color"
+            }
+          ],
+          "samples": [
+            "stop {color} time",
+            "stop {color} player time",
+            "stop {color} turn",
+            "stop {color} player turn",
+            "end {color} time",
+            "end {color} player time",
+            "end {color} turn",
+            "end {color} player turn",
+            "finish {color} time",
+            "finish {color} player time",
+            "finish {color} turn",
+            "finish {color} player turn",
+            "{color} stop",
+            "{color} player stop",
+            "{color} player stop time",
+            "{color} player stop turn",
+            "{color} end",
+            "{color} player end",
+            "{color} player end time",
+            "{color} player end turn",
+            "{color} finish",
+            "{color} player finish",
+            "{color} player finish time",
+            "{color} player finish turn"
+          ]
+        },
+        {
+          "name": "LogStartTimeIntent",
+          "slots": [
+            {
+              "name": "color",
+              "type": "AMAZON.Color"
+            }
+          ],
+          "samples": [
+            "start {color} time",
+            "start {color} player time",
+            "start {color} turn",
+            "start {color} player turn",
+            "begin {color} time",
+            "begin {color} player time",
+            "begin {color} turn",
+            "begin {color} player turn",
+            "{color} start",
+            "{color} player start",
+            "{color} player start time",
+            "{color} player start turn",
+            "{color} begin",
+            "{color} player begin",
+            "{color} player begin time",
+            "{color} player begin turn"
+          ]
+        },
+        {
+          "name": "GetTimeIntent",
+          "slots": [
+            {
+              "name": "color",
+              "type": "AMAZON.Color"
+            }
+          ],
+          "samples": [
+            "{color} time",
+            "tell {color} player time",
+            "say {color} player time",
+            "tell {color} time",
+            "say {color} time",
+            "how much {color} player played",
+            "how much {color} played",
+            "what is {color} player time",
+            "what is {color} time",
+            "get {color} player time",
+            "get {color} time"
+          ]
+        },
+        {
+          "name": "GetAllTimeIntent",
+          "slots": [],
+          "samples": [
+            "tell all time",
+            "say all time",
+            "say all players time",
+            "all players time",
+            "how much played",
+            "how much do we played",
+            "what is all time",
+            "what is all players time",
+            "get all players time",
+            "get all time"
+          ]
+        },
+        {
+          "name": "ClearAllTimeIntent",
+          "slots": [],
+          "samples": [
+            "remove time",
+            "clear time",
+            "remove all",
+            "clear all",
+            "end game",
+            "end game session",
+            "remove all time",
+            "clear all time"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "AMAZON.Color",
+          "values": [
+            {
+              "name": {
+                "value": "yellow"
+              }
+            },
+            {
+              "name": {
+                "value": "orange"
+              }
+            },
+            {
+              "name": {
+                "value": "white",
+                "synonyms": [
+                  "light"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "black",
+                "synonyms": [
+                  "dark"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "purple",
+                "synonyms": [
+                  "magenta",
+                  "violet"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "brown"
+              }
+            },
+            {
+              "name": {
+                "value": "blue",
+                "synonyms": [
+                  "ultramarine",
+                  "indigo",
+                  "cyan"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "green"
+              }
+            },
+            {
+              "name": {
+                "value": "red",
+                "synonyms": [
+                  "mahogany",
+                  "crimson"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "GetTimeIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "color",
+              "type": "AMAZON.Color",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.617123640279.641547293216"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.617123640279.641547293216",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "I understand phrases like - what is red player time, or get yellow time"
+          },
+          {
+            "type": "PlainText",
+            "value": "Just say - get white player time"
+          },
+          {
+            "type": "PlainText",
+            "value": "Just tell me - get red time, or what is green player's time"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1274141215076.778607012911",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "I understand phrases like - red turn end, or green player finished"
+          },
+          {
+            "type": "PlainText",
+            "value": "Just tell me - red player turn end, or blue player finished"
+          }
+        ]
+      }
+    ]
+  }
+}

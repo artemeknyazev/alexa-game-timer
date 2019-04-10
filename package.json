@@ -1,0 +1,34 @@
+{
+  "name": "alexa-game-timer",
+  "version": "0.0.0",
+  "description": "A simple “game timer” skill for Amazon Alexa",
+  "author": "Artem E. Knyazev <artem.e.knyazev@yandex.ru>",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ask-sdk-core": "^2.0.7",
+    "ask-sdk-model": "^1.4.1",
+    "aws-sdk": "^2.326.0"
+  },
+  "scripts": {
+    "publish-lamda": "./scripts/publish-lambda.sh",
+    "test": "jest"
+  },
+  "keywords": [
+    "alexa",
+    "game",
+    "timer"
+  ],
+  "devDependencies": {
+    "deep-freeze": "0.0.1",
+    "jest": "^24.7.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artemeknyazev/alexa-game-timer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/artemeknyazev/alexa-game-timer/issues"
+  },
+  "homepage": "https://github.com/artemeknyazev/alexa-game-timer#readme"
+}
