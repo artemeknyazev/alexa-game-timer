@@ -13,7 +13,7 @@ const NEW_GAME_STATE = freeze({
   currentPlayerStartTime: 0,
   currentPlayerTotalTime: 0,
   playerTimes: {},
-  state: APP_STATE_TURN_PAUSED,
+  state: APP_STATE_NEW_GAME,
 })
 const USER_ID = 'testuserid'
 const PLAYER_COLOR_RED = 'red'
@@ -41,7 +41,7 @@ describe('`AppStateModel`', () => {
     })
 
     it('produces a valid new game state on a non-empty state', (done) => {
-      const oldState = freeze({
+      const state = freeze({
         currentPlayer: 'red',
         currentPlayerStartTime: Date.now() - 10000,
         currentPlayerTotalTime: 100000,
@@ -51,7 +51,7 @@ describe('`AppStateModel`', () => {
         },
         state: APP_STATE_TURN_ONGOING,
       })
-      AppStateModel.getByUserId = () => Promise.resolve(oldState)
+      AppStateModel.getByUserId = () => Promise.resolve(state)
       AppStateModel.putByUserId = (userId, state) => {
         expect(userId).toEqual(USER_ID)
         expect(state).toEqual(NEW_GAME_STATE)
@@ -62,7 +62,7 @@ describe('`AppStateModel`', () => {
   })
 
   describe('`markStartTurn` call', () => {
-    it('produces a valid game state on an empty state (5)', (done) => {
+    it('produces a valid game state on an empty state (6)', (done) => {
       const newState = freeze({
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: Date.now(),
@@ -81,10 +81,9 @@ describe('`AppStateModel`', () => {
 
     it('produces a valid game state on a new game state (5)', (done) => {
       const newState = freeze({
+        ...NEW_GAME_STATE,
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: Date.now(),
-        currentPlayerTotalTime: 0,
-        playerTimes: {},
         state: APP_STATE_TURN_ONGOING,
       })
       AppStateModel.getByUserId = () => Promise.resolve(NEW_GAME_STATE)
@@ -97,7 +96,7 @@ describe('`AppStateModel`', () => {
     })
 
     it('does nothing if same player color and the current turn is ongoing (1)', (done) => {
-      const oldState = freeze({
+      const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: Date.now(),
         currentPlayerTotalTime: 35000,
@@ -107,7 +106,7 @@ describe('`AppStateModel`', () => {
         },
         state: APP_STATE_TURN_ONGOING,
       })
-      AppStateModel.getByUserId = () => Promise.resolve(oldState)
+      AppStateModel.getByUserId = () => Promise.resolve(state)
       const putFn = AppStateModel.putByUserId = jest.fn()
       AppStateModel.markStartTurn(USER_ID, PLAYER_COLOR_RED).then(() => {
         expect(putFn).not.toHaveBeenCalled()
@@ -127,10 +126,8 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_PAUSED,
       })
       const newState = freeze({
-        currentPlayer: PLAYER_COLOR_RED,
+        ...oldState,
         currentPlayerStartTime: Date.now(),
-        currentPlayerTotalTime: oldState.currentPlayerTotalTime,
-        playerTimes: oldState.playerTimes,
         state: APP_STATE_TURN_ONGOING,
       })
       AppStateModel.getByUserId = () => Promise.resolve(oldState)
@@ -210,7 +207,7 @@ describe('`AppStateModel`', () => {
   })
 
   describe('`markPauseTurn` call', () => {
-    it('produces a valid new game state on an empty state (3)', (done) => {
+    it('produces a valid new game state on an empty state (4)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.putByUserId = (userId, state) => {
         expect(userId).toEqual(USER_ID)
@@ -220,7 +217,7 @@ describe('`AppStateModel`', () => {
       AppStateModel.markPauseTurn(USER_ID)
     })
 
-    it('does nothing on a new game state (2,3)', (done) => {
+    it('does nothing on a new game state (3)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve(NEW_GAME_STATE)
       const putFn = AppStateModel.putByUserId = jest.fn()
       AppStateModel.markPauseTurn(USER_ID, PLAYER_COLOR_RED).then(() => {
@@ -230,7 +227,7 @@ describe('`AppStateModel`', () => {
     })
 
     it('does nothing when the current turn is already paused (2)', (done) => {
-      const oldState = freeze({
+      const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: 0,
         currentPlayerTotalTime: 35000,
@@ -240,7 +237,7 @@ describe('`AppStateModel`', () => {
         },
         state: APP_STATE_TURN_PAUSED,
       })
-      AppStateModel.getByUserId = () => Promise.resolve(oldState)
+      AppStateModel.getByUserId = () => Promise.resolve(state)
       const putFn = AppStateModel.putByUserId = jest.fn()
       AppStateModel.markPauseTurn(USER_ID, PLAYER_COLOR_RED).then(() => {
         expect(putFn).not.toHaveBeenCalled()
@@ -261,10 +258,9 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_ONGOING,
       })
       const newState = freeze({
-        currentPlayer: PLAYER_COLOR_RED,
+        ...oldState,
         currentPlayerStartTime: 0,
         currentPlayerTotalTime: oldState.currentPlayerTotalTime + deltaTime,
-        playerTimes: oldState.playerTimes,
         state: APP_STATE_TURN_PAUSED,
       })
       AppStateModel.getByUserId = () => Promise.resolve(oldState)
@@ -278,7 +274,7 @@ describe('`AppStateModel`', () => {
   })
 
   describe('`getPlayerTotalTime` call', () => {
-    it('returns `null` on an empty state (4)', (done) => {
+    it('returns `null` on an empty state (5)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.getPlayerTotalTime(USER_ID, PLAYER_COLOR_RED).then((time) => {
         expect(time).toBe(null)
@@ -330,7 +326,7 @@ describe('`AppStateModel`', () => {
       })
     })
 
-    it('returns valid time when a current user is the specified one and the current turn is ongoing (2)', (done) => {
+    it('returns valid time when a current user is the specified one and the current turn is ongoing (3)', (done) => {
       const deltaTime = 10000
       const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
@@ -349,7 +345,7 @@ describe('`AppStateModel`', () => {
       })
     })
 
-    it('returns valid time when a current user is the specified one and the current turn is paused (3)', (done) => {
+    it('returns valid time when a current user is the specified one and the current turn is paused (2)', (done) => {
       const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: 0,
@@ -369,7 +365,7 @@ describe('`AppStateModel`', () => {
   })
 
   describe('`getCurrentTurnTime` call', () => {
-    it('returns `null` on an empty state (1)', (done) => {
+    it('returns `null` on an empty state (4)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.getCurrentTurnTime(USER_ID).then((time) => {
         expect(time).toBe(null)
@@ -424,7 +420,7 @@ describe('`AppStateModel`', () => {
   })
 
   describe('`getAllPlayersTotalTime` call', () => {
-    it('returns `null` on an empty state (1)', (done) => {
+    it('returns `null` on an empty state (6)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.getAllPlayersTotalTime(USER_ID).then((times) => {
         expect(times).toBe(null)
@@ -458,7 +454,7 @@ describe('`AppStateModel`', () => {
       })
     })
 
-    it('returns valid time when there are no time records and the current turn is ongoing (2)', (done) => {
+    it('returns valid time when there are no time records and the current turn is ongoing (3)', (done) => {
       const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: 0,
@@ -475,7 +471,7 @@ describe('`AppStateModel`', () => {
       })
     })
 
-    it('returns valid time when the current turn is ongoing (3)', (done) => {
+    it('returns valid time when there are time records and the current turn is ongoing (5)', (done) => {
       const deltaTime = 10000
       const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
@@ -497,7 +493,7 @@ describe('`AppStateModel`', () => {
       })
     })
 
-    it('returns valid time when the current turn is paused (2)', (done) => {
+    it('returns valid time when there are time records and the current turn is paused (4)', (done) => {
       const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: 0,
@@ -520,7 +516,7 @@ describe('`AppStateModel`', () => {
   })
 
   describe('`describeCurrentState` call', () => {
-    it('returns valid description on an empty state (1)', (done) => {
+    it('returns valid description on an empty state (3)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.describeCurrentState(USER_ID).then((currentState) => {
         expect(currentState).toEqual({ state: APP_STATE_NEW_GAME, currentPlayer: null })
@@ -585,18 +581,17 @@ describe('`AppStateModel`', () => {
       AppStateModel.markContinueTurn(USER_ID)
     })
 
-    it('produces a valid new game state on a new game state (3)', (done) => {
+    it('does nothing on a new game state (3)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve(NEW_GAME_STATE)
-      AppStateModel.putByUserId = (userId, state) => {
-        expect(userId).toEqual(USER_ID)
-        expect(state).toEqual(NEW_GAME_STATE)
+      const putFn = AppStateModel.putByUserId = jest.fn()
+      AppStateModel.markContinueTurn(USER_ID).then(() => {
+        expect(putFn).not.toHaveBeenCalled()
         done()
-      }
-      AppStateModel.markContinueTurn(USER_ID)
+      })
     })
 
     it('does nothing when the current turn is ongoing', (done) => {
-      const oldState = freeze({
+      const state = freeze({
         currentPlayer: PLAYER_COLOR_RED,
         currentPlayerStartTime: Date.now(),
         currentPlayerTotalTime: 35000,
@@ -606,7 +601,7 @@ describe('`AppStateModel`', () => {
         },
         state: APP_STATE_TURN_ONGOING,
       })
-      AppStateModel.getByUserId = () => Promise.resolve(oldState)
+      AppStateModel.getByUserId = () => Promise.resolve(state)
       const putFn = AppStateModel.putByUserId = jest.fn()
       AppStateModel.markContinueTurn(USER_ID, PLAYER_COLOR_RED).then(() => {
         expect(putFn).not.toHaveBeenCalled()
