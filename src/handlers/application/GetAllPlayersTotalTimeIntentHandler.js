@@ -1,8 +1,13 @@
-const { GET_ALL_PLAYERS_TOTAL_TIME_INTENT } = require('../../constants')
+const {
+  GET_ALL_PLAYERS_TOTAL_TIME_INTENT,
+  APP_STATE_NEW_GAME,
+} = require('../../constants')
 const {
   canHandleIntentRequest,
   getUserId,
   msToHuman,
+  listToSpeech,
+  speakAndReprompt,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
 
@@ -11,25 +16,18 @@ const GetAllPlayersTotalTimeIntentHandler = {
 
   async handle(handlerInput) {
     const userId = getUserId(handlerInput)
-    const times = await AppStateModel.getAllPlayersTotalTime(userId)
-
-    const keys = Object.keys(times)
-    if (!keys.length) {
-      const speechText = 'No turns we logged yet'
-      return handlerInput.responseBuilder
-        .speak(speechText)
-        .reprompt(speechText)
-        .getResponse()
+    const { state } = await AppStateModel.describeCurrentState(userId)
+    if (state === APP_STATE_NEW_GAME) {
+      const speechText = `This is a new game. No turns have been made yet`
+      return speakAndReprompt(handlerInput, speechText)
     }
 
-    const timesStr = keys
-      .map(color => `${color} player's - ${msToHuman(times[color])}`)
-      .join('. ')
-    const speechText = `Total time for all players is: ` + timesStr
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse()
+    const times = await AppStateModel.getAllPlayersTotalTime(userId)
+    const colors = Object.keys(times)
+    const speechTexts = colors.map(color =>
+      `${color} player - ${msToHuman(times[color])}`)
+    const speechText = `Total times for all players are: ` + listToSpeech(speechTexts)
+    return speakAndReprompt(handlerInput, speechText)
   }
 }
 

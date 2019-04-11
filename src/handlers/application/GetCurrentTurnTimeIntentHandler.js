@@ -7,8 +7,8 @@ const {
 const {
   canHandleIntentRequest,
   getUserId,
-  getSlots,
   msToHuman,
+  speakAndReprompt,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
 
@@ -17,15 +17,6 @@ const GetCurrentTurnTimeIntentHandler = {
 
   async handle(handlerInput) {
     const userId = getUserId(handlerInput)
-    const { color } = getSlots(handlerInput)
-    if (!color) {
-      const speechText = 'I do not understand. Please say, player red turn start, or begin green turn'
-      return handlerInput.responseBuilder
-        .speak(speechText)
-        .reprompt(speechText)
-        .getResponse()
-    }
-
     const currentTurnTime = await AppStateModel.getCurrentTurnTime(userId)
     const { currentPlayer, state } = await AppStateModel.describeCurrentState(userId)
 
@@ -40,10 +31,7 @@ const GetCurrentTurnTimeIntentHandler = {
       throw new Error(`GetCurrentTurnTimeIntentHandler: unknown state ${state}`)
     }
 
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse()
+    return speakAndReprompt(handlerInput, speechText)
   }
 }
 

@@ -43,7 +43,7 @@ function getByUserIdCb(userId, cb) {
   }
   // NOTE: we do not expose the whole object, just the `appState` part
   client.get(params, (err, data) =>
-    err ? cb(err) : cb(null, data.appState))
+    err ? cb(err) : cb(null, (data && data.Item && data.Item.appState) || {}))
 }
 
 /**
@@ -98,12 +98,12 @@ function putByUserId(userId, state) {
  * @returns {void}
  */
 async function markNewGame(userId) {
-  const state = (await AppStateModel.getByUserId(userId)) || {}
+  const state = await AppStateModel.getByUserId(userId)
 
   const newState = {
     ...state,
     state: APP_STATE_TURN_PAUSED,
-    currentPlayer: '',
+    currentPlayer: null,
     currentPlayerStartTime: 0,
     currentPlayerTotalTime: 0,
     playerTimes: {},
@@ -130,7 +130,7 @@ async function markNewGame(userId) {
  * @returns {void}
  */
 async function markStartTurn(userId, playerColor, time = Date.now()) {
-  const state = (await AppStateModel.getByUserId(userId)) || {}
+  const state = await AppStateModel.getByUserId(userId)
 
   const newState = { ...state }
   const previousPlayer = newState.currentPlayer
@@ -143,9 +143,7 @@ async function markStartTurn(userId, playerColor, time = Date.now()) {
       if (newState.state === APP_STATE_TURN_ONGOING) {
         // (1) no need to restart the current turn if it belongs to the same player and is ongoing
         return
-      } else {
-        // (2)
-      }
+      } // else (2)
     } else {
       // a different player, cases (3) and (4)
       const previousPlayerPreviousTotalTime =
@@ -213,7 +211,7 @@ async function markStartTurn(userId, playerColor, time = Date.now()) {
  * @returns {void}
  */
 async function markPauseTurn(userId, time = Date.now()) {
-  const state = (await AppStateModel.getByUserId(userId)) || {}
+  const state = await AppStateModel.getByUserId(userId)
 
   if (state.state) { // not (3)
     if (state.state === APP_STATE_TURN_PAUSED) { // (2)
@@ -231,12 +229,46 @@ async function markPauseTurn(userId, time = Date.now()) {
       (time - newState.currentPlayerStartTime)
     newState.currentPlayerTotalTime = currentPlayerTotalTime
   } else { // (3)
-    newState.currentPlayer = ''
+    newState.currentPlayer = null
     newState.currentPlayerTotalTime = 0
     newState.playerTimes = {}
   }
   newState.currentPlayerStartTime = 0
   newState.state = APP_STATE_TURN_PAUSED
+
+  await AppStateModel.putByUserId(userId, newState)
+}
+
+/**
+ * Continues current player's turn
+ *
+ * Variants:
+ *   * (1) there were ongoing player turn
+ *   * (2) the turn is paused
+ *   * (3) there is no current player (it's a beginning of the game)
+ *
+ * @param {string} userId            Alexa user id
+ * @param {number} [time=Date.now()] Turn pause time. Defaults to now
+ * @returns {void}
+ */
+async function markContinueTurn(userId, time = Date.now()) {
+  const state = await AppStateModel.getByUserId(userId)
+  const newState = { ...state }
+
+  if (state.currentPlayer) {
+    if (state.state === APP_STATE_TURN_PAUSED) {
+      newState.state = APP_STATE_TURN_ONGOING
+      newState.currentPlayerStartTime = time
+    } else { // (1)
+      return
+    }
+  } else { // (3), make a valid new game state
+    newState.state = APP_STATE_TURN_PAUSED
+    newState.currentPlayer = null
+    newState.currentPlayerStartTime = 0
+    newState.currentPlayerTotalTime = 0
+    newState.playerTimes = {}
+  }
 
   await AppStateModel.putByUserId(userId, newState)
 }
@@ -255,7 +287,7 @@ async function markPauseTurn(userId, time = Date.now()) {
  * @returns {number}           Player total time for all turns
  */
 async function getPlayerTotalTime(userId, playerColor) {
-  const state = (await AppStateModel.getByUserId(userId)) || {}
+  const state = await AppStateModel.getByUserId(userId)
 
   if (!(
     (state.playerTimes && state.playerTimes[playerColor]) ||
@@ -297,7 +329,7 @@ async function getPlayerTotalTime(userId, playerColor) {
  * @returns {number}      Current turn total time
  */
 async function getCurrentTurnTime(userId) {
-  const state = (await AppStateModel.getByUserId(userId)) || {}
+  const state = await AppStateModel.getByUserId(userId)
 
   if (!state.currentPlayer) { // (1)
     return null
@@ -328,7 +360,7 @@ async function getCurrentTurnTime(userId) {
  * @returns { { [string]: number } } A mapping of player colors to their total time
  */
 async function getAllPlayersTotalTime(userId) {
-  const state = (await AppStateModel.getByUserId(userId)) || {}
+  const state = await AppStateModel.getByUserId(userId)
 
   if (state.currentPlayer) { // (2) through (4)
     const totalTimes = { ...state.playerTimes }
@@ -362,12 +394,12 @@ async function getAllPlayersTotalTime(userId) {
  * @returns { { state: string, currentPlayer: string } } Description of a current game state
  */
 async function describeCurrentState(userId) {
-  const state = (await AppStateModel.getByUserId(userId)) || {}
+  const state = await AppStateModel.getByUserId(userId)
 
   if (state.currentPlayer) { // (2)
     return { state: state.state, currentPlayer: state.currentPlayer }
   } else { // (1)
-    return { state: APP_STATE_NEW_GAME, currentPlayer: '' }
+    return { state: APP_STATE_NEW_GAME, currentPlayer: null }
   }
 }
 
@@ -380,6 +412,7 @@ const AppStateModel = {
   markNewGame,
   markStartTurn,
   markPauseTurn,
+  markContinueTurn,
   getPlayerTotalTime,
   getCurrentTurnTime,
   getAllPlayersTotalTime,

@@ -3,6 +3,8 @@ const {
   canHandleIntentRequest,
   getUserId,
   getSlots,
+  emph,
+  speakAndReprompt,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
 
@@ -13,20 +15,14 @@ const StartTurnIntentHandler = {
     const userId = getUserId(handlerInput)
     const { color } = getSlots(handlerInput)
     if (!color) {
-      const speechText = 'I do not understand. Please say, player red turn start, or begin green turn'
-      return handlerInput.responseBuilder
-        .speak(speechText)
-        .reprompt(speechText)
-        .getResponse()
+      const speechText = `I do not understand. Please say, ${emph('start red turn')}`
+      return speakAndReprompt(handlerInput, speechText)
     }
 
     await AppStateModel.markStartTurn(userId, color)
 
     const speechText = `Marked the ${color} player's turn start`
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse()
+    return speakAndReprompt(handlerInput, speechText)
   }
 }
 

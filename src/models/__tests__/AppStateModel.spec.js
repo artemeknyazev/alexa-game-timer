@@ -9,7 +9,7 @@ const {
 // NOTE: we freeze all objects to prevent subtle bugs in tests
 // when previous state is modified to match the desired one
 const NEW_GAME_STATE = freeze({
-  currentPlayer: '',
+  currentPlayer: null,
   currentPlayerStartTime: 0,
   currentPlayerTotalTime: 0,
   playerTimes: {},
@@ -31,10 +31,9 @@ describe('`AppStateModel`', () => {
 
   describe('`markNewGame` call', () => {
     it('produces a valid new game state on an empty state', (done) => {
-      const oldState = undefined
-      AppStateModel.getByUserId = () => Promise.resolve(oldState)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.getByUserId = () => Promise.resolve({})
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(NEW_GAME_STATE)
         done()
       }
@@ -53,8 +52,8 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_ONGOING,
       })
       AppStateModel.getByUserId = () => Promise.resolve(oldState)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(NEW_GAME_STATE)
         done()
       }
@@ -71,9 +70,9 @@ describe('`AppStateModel`', () => {
         playerTimes: {},
         state: APP_STATE_TURN_ONGOING,
       })
-      AppStateModel.getByUserId = () => Promise.resolve(undefined)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.getByUserId = () => Promise.resolve({})
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(newState)
         done()
       }
@@ -89,8 +88,8 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_ONGOING,
       })
       AppStateModel.getByUserId = () => Promise.resolve(NEW_GAME_STATE)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(newState)
         done()
       }
@@ -135,8 +134,8 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_ONGOING,
       })
       AppStateModel.getByUserId = () => Promise.resolve(oldState)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(newState)
         done()
       }
@@ -169,8 +168,8 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_ONGOING,
       })
       AppStateModel.getByUserId = () => Promise.resolve(oldState)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(newState)
         done()
       }
@@ -201,8 +200,8 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_ONGOING,
       })
       AppStateModel.getByUserId = () => Promise.resolve(oldState)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(newState)
         done()
       }
@@ -212,10 +211,9 @@ describe('`AppStateModel`', () => {
 
   describe('`markPauseTurn` call', () => {
     it('produces a valid new game state on an empty state (3)', (done) => {
-      const oldState = undefined
-      AppStateModel.getByUserId = () => Promise.resolve(oldState)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.getByUserId = () => Promise.resolve({})
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(NEW_GAME_STATE)
         done()
       }
@@ -270,8 +268,8 @@ describe('`AppStateModel`', () => {
         state: APP_STATE_TURN_PAUSED,
       })
       AppStateModel.getByUserId = () => Promise.resolve(oldState)
-      AppStateModel.putByUserId = (_userId, state) => {
-        expect(_userId).toEqual(USER_ID)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
         expect(state).toEqual(newState)
         done()
       }
@@ -281,7 +279,7 @@ describe('`AppStateModel`', () => {
 
   describe('`getPlayerTotalTime` call', () => {
     it('returns `null` on an empty state (4)', (done) => {
-      AppStateModel.getByUserId = () => Promise.resolve(undefined)
+      AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.getPlayerTotalTime(USER_ID, PLAYER_COLOR_RED).then((time) => {
         expect(time).toBe(null)
         done()
@@ -372,7 +370,7 @@ describe('`AppStateModel`', () => {
 
   describe('`getCurrentTurnTime` call', () => {
     it('returns `null` on an empty state (1)', (done) => {
-      AppStateModel.getByUserId = () => Promise.resolve(undefined)
+      AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.getCurrentTurnTime(USER_ID).then((time) => {
         expect(time).toBe(null)
         done()
@@ -427,7 +425,7 @@ describe('`AppStateModel`', () => {
 
   describe('`getAllPlayersTotalTime` call', () => {
     it('returns `null` on an empty state (1)', (done) => {
-      AppStateModel.getByUserId = () => Promise.resolve(undefined)
+      AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.getAllPlayersTotalTime(USER_ID).then((times) => {
         expect(times).toBe(null)
         done()
@@ -523,9 +521,9 @@ describe('`AppStateModel`', () => {
 
   describe('`describeCurrentState` call', () => {
     it('returns valid description on an empty state (1)', (done) => {
-      AppStateModel.getByUserId = () => Promise.resolve(undefined)
+      AppStateModel.getByUserId = () => Promise.resolve({})
       AppStateModel.describeCurrentState(USER_ID).then((currentState) => {
-        expect(currentState).toEqual({ state: APP_STATE_NEW_GAME, currentPlayer: '' })
+        expect(currentState).toEqual({ state: APP_STATE_NEW_GAME, currentPlayer: null })
         done()
       })
     })
@@ -533,7 +531,7 @@ describe('`AppStateModel`', () => {
     it('returns valid description on a new game state (1)', (done) => {
       AppStateModel.getByUserId = () => Promise.resolve(NEW_GAME_STATE)
       AppStateModel.describeCurrentState(USER_ID).then((currentState) => {
-        expect(currentState).toEqual({ state: APP_STATE_NEW_GAME, currentPlayer: '' })
+        expect(currentState).toEqual({ state: APP_STATE_NEW_GAME, currentPlayer: null })
         done()
       })
     })
@@ -573,6 +571,72 @@ describe('`AppStateModel`', () => {
         expect(currentState).toEqual({ state: APP_STATE_TURN_PAUSED, currentPlayer: PLAYER_COLOR_RED })
         done()
       })
+    })
+  })
+
+  describe('`markContinueTurn` call', () => {
+    it('produces a valid new game state on an empty state (3)', (done) => {
+      AppStateModel.getByUserId = () => Promise.resolve({})
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
+        expect(state).toEqual(NEW_GAME_STATE)
+        done()
+      }
+      AppStateModel.markContinueTurn(USER_ID)
+    })
+
+    it('produces a valid new game state on a new game state (3)', (done) => {
+      AppStateModel.getByUserId = () => Promise.resolve(NEW_GAME_STATE)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
+        expect(state).toEqual(NEW_GAME_STATE)
+        done()
+      }
+      AppStateModel.markContinueTurn(USER_ID)
+    })
+
+    it('does nothing when the current turn is ongoing', (done) => {
+      const oldState = freeze({
+        currentPlayer: PLAYER_COLOR_RED,
+        currentPlayerStartTime: Date.now(),
+        currentPlayerTotalTime: 35000,
+        playerTimes: {
+          [PLAYER_COLOR_RED]: 90000,
+          [PLAYER_COLOR_GREEN]: 135000,
+        },
+        state: APP_STATE_TURN_ONGOING,
+      })
+      AppStateModel.getByUserId = () => Promise.resolve(oldState)
+      const putFn = AppStateModel.putByUserId = jest.fn()
+      AppStateModel.markContinueTurn(USER_ID, PLAYER_COLOR_RED).then(() => {
+        expect(putFn).not.toHaveBeenCalled()
+        done()
+      })
+    })
+
+    it('continues the turn when the current turn is paused', (done) => {
+      const oldState = freeze({
+        currentPlayer: PLAYER_COLOR_RED,
+        currentPlayerStartTime: 0,
+        currentPlayerTotalTime: 35000,
+        playerTimes: {
+          [PLAYER_COLOR_RED]: 90000,
+          [PLAYER_COLOR_GREEN]: 135000,
+        },
+        state: APP_STATE_TURN_PAUSED,
+      })
+      const newState = freeze({
+        ...oldState,
+        currentPlayerStartTime: Date.now(),
+        state: APP_STATE_TURN_ONGOING,
+      })
+      AppStateModel.getByUserId = () => Promise.resolve(oldState)
+      AppStateModel.putByUserId = (userId, state) => {
+        expect(userId).toEqual(USER_ID)
+        expect(state).toEqual(newState)
+        done()
+      }
+      AppStateModel.markContinueTurn(USER_ID)
     })
   })
 })

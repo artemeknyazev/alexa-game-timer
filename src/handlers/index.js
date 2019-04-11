@@ -1,5 +1,4 @@
 module.exports = {
-  CancelAndStopIntentHandler: require('./application/CancelAndStopIntentHandler'),
   ContinueTurnIntentHandler: require('./application/ContinueTurnIntentHandler'),
   NewGameIntentHandler: require('./application/NewGameIntentHandler'),
   DebugHandler: require('./system/DebugHandler'),

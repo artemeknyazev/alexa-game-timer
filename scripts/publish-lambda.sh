@@ -8,8 +8,8 @@ set -eu -o pipefail
 readonly FUNCTION_NAME=alexa-game-timer
 readonly ZIP_FILE_PATH=$TMPDIR/alexa-game-timer.zip
 
-# Remove devDependencies
-npm prune --production
+# Remove devDependencies if any
+#npm prune --production
 
 # Prepare a zipped application for publishing
 rm $ZIP_FILE_PATH || true
@@ -19,6 +19,3 @@ zip -X -r $ZIP_FILE_PATH *
 aws lambda update-function-code \
   --function-name $FUNCTION_NAME \
   --zip-file fileb://$ZIP_FILE_PATH
-
-# Add devDependencies back
-npm i

@@ -6,7 +6,6 @@
         {
           "name": "AMAZON.CancelIntent",
           "samples": [
-            "do not do it",
             "prevent",
             "cancel"
           ]
@@ -79,6 +78,7 @@
           "name": "GetAllPlayersTotalTimeIntent",
           "slots": [],
           "samples": [
+            "total time",
             "all time",
             "all players time",
             "how much",
@@ -98,6 +98,7 @@
           "name": "GetCurrentTurnTimeIntent",
           "slots": [],
           "samples": [
+            "game timer",
             "whose turn",
             "what is happening",
             "whats happening"

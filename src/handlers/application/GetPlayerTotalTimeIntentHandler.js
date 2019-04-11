@@ -3,7 +3,9 @@ const {
   canHandleIntentRequest,
   getUserId,
   getSlots,
+  emph,
   msToHuman,
+  speakAndReprompt,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
 
@@ -14,20 +16,14 @@ const GetPlayerTotalTimeIntentHandler = {
     const userId = getUserId(handlerInput)
     const { color } = getSlots(handlerInput)
     if (!color) {
-      const speechText = 'I do not understand. Please say, player red turn start, or begin green turn'
-      return handlerInput.responseBuilder
-        .speak(speechText)
-        .reprompt(speechText)
-        .getResponse()
+      const speechText = `I do not understand. Please say, ${emph('red player time')}`
+      return speakAndReprompt(handlerInput, speechText)
     }
 
     const totalTime = await AppStateModel.getPlayerTotalTime(userId, color)
 
     const speechText = `The ${color} player's total time is ${msToHuman(totalTime)}`
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse()
+    return speakAndReprompt(handlerInput, speechText)
   }
 }
 

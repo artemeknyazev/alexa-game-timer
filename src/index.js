@@ -1,7 +1,6 @@
 // See also https://alexa.design/cookbook
 const Alexa = require('ask-sdk-core')
 const {
-  CancelAndStopIntentHandler,
   ContinueTurnIntentHandler,
   NewGameIntentHandler,
   DebugHandler,
@@ -20,19 +19,22 @@ exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     // Startup
     LaunchRequestHandler,
+
+    // Help
     HelpIntentHandler,
 
-    // Application flow
+    // Application flow (getters)
     GetPlayerTotalTimeIntentHandler,
     GetCurrentTurnTimeIntentHandler,
     GetAllPlayersTotalTimeIntentHandler,
+
+    // Application flow (modifiers)
     StartTurnIntentHandler,
     PauseTurnIntentHandler,
     ContinueTurnIntentHandler,
     NewGameIntentHandler,
 
     // Exit&Debug
-    CancelAndStopIntentHandler,
     SessionEndedRequestHandler,
     DebugHandler
   ).addErrorHandlers(

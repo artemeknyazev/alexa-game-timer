@@ -2,6 +2,7 @@ const { NEW_GAME_INTENT } = require('../../constants')
 const {
   canHandleIntentRequest,
   getUserId,
+  speakAndReprompt,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
 
@@ -13,10 +14,7 @@ const NewGameIntentHandler = {
     await AppStateModel.markNewGame(userId)
 
     const speechText = `Ready for a new game`
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse()
+    return speakAndReprompt(handlerInput, speechText)
   }
 }
 
