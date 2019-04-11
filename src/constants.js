@@ -5,7 +5,6 @@ const SESSION_ENDED_REQUEST = 'SessionEndedRequest'
 
 // Intents
 const CANCEL_INTENT = 'AMAZON.CancelIntent'
-const STOP_INTENT = 'AMAZON.StopIntent'
 const CONTINUE_TURN_INTENT = 'ContinueTurnIntent'
 const GET_ALL_PLAYERS_TOTAL_TIME_INTENT = 'GetAllPlayersTotalTimeIntent'
 const GET_CURRENT_TURN_TIME_INTENT = 'GetCurrentTurnTimeIntent'
@@ -14,13 +13,14 @@ const HELP_INTENT = 'AMAZON.HelpIntent'
 const NEW_GAME_INTENT = 'NewGameIntent'
 const PAUSE_TURN_INTENT = 'PauseTurnIntent'
 const START_TURN_INTENT = 'StartTurnIntent'
+const STOP_INTENT = 'AMAZON.StopIntent'
+const NAVIGATE_HOME_INTENT = 'AMAZON.NavigateHomeIntent'
 
 // DB
 const APP_STATE_TABLE = 'alexa_game_timer'
 
 // App states
-// TODO: refactor the state model to use this state for the new game state when there is no currentPlayer
-const APP_STATE_NEW_GAME = 'new_game' // only used for describing current state for now
+const APP_STATE_NEW_GAME = 'new_game'
 const APP_STATE_TURN_ONGOING = 'player_turn'
 const APP_STATE_TURN_PAUSED = 'paused'
 
@@ -32,7 +32,6 @@ module.exports = {
 
   // Intents
   CANCEL_INTENT,
-  STOP_INTENT,
   CONTINUE_TURN_INTENT,
   HELP_INTENT,
   GET_ALL_PLAYERS_TOTAL_TIME_INTENT,
@@ -41,6 +40,8 @@ module.exports = {
   NEW_GAME_INTENT,
   PAUSE_TURN_INTENT,
   START_TURN_INTENT,
+  STOP_INTENT,
+  NAVIGATE_HOME_INTENT,
 
   // DB
   APP_STATE_TABLE,

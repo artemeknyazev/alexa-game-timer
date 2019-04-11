@@ -102,10 +102,30 @@ function listToSpeech(list, time = 325) {
   return list.join(` <break time="${time}ms"/> `)
 }
 
+/**
+ * Speak and continue a current skill (reprompt)
+ * Return the result of a call from the handler's handle method
+ *
+ * @param {Object} handlerInput
+ * @param {string} speechText
+ */
 function speakAndReprompt(handlerInput, speechText) {
   return handlerInput.responseBuilder
     .speak(speechText)
     .reprompt(speechText)
+    .getResponse()
+}
+
+/**
+ * Speak and exit current skill (no reprompt)
+ * Return the result of a call from the handler's handle method
+ *
+ * @param {Object} handlerInput
+ * @param {string} speechText
+ */
+function speak(handlerInput, speechText) {
+  return handlerInput.responseBuilder
+    .speak(speechText)
     .getResponse()
 }
 
@@ -122,4 +142,5 @@ module.exports = {
   listToSpeech,
 
   speakAndReprompt,
+  speak,
 }

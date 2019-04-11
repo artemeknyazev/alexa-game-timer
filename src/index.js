@@ -2,6 +2,7 @@
 const Alexa = require('ask-sdk-core')
 const {
   ContinueTurnIntentHandler,
+  CloseIntentHandler,
   NewGameIntentHandler,
   DebugHandler,
   ErrorHandler,
@@ -35,6 +36,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     NewGameIntentHandler,
 
     // Exit&Debug
+    CloseIntentHandler,
     SessionEndedRequestHandler,
     DebugHandler
   ).addErrorHandlers(

@@ -1,8 +1,4 @@
-const {
-  CANCEL_INTENT,
-  STOP_INTENT,
-  PAUSE_TURN_INTENT
-} = require('../../constants')
+const { PAUSE_TURN_INTENT } = require('../../constants')
 const {
   canHandleIntentRequest,
   getUserId,
@@ -11,7 +7,7 @@ const {
 const { AppStateModel } = require('../../models')
 
 const PauseTurnIntentHandler = {
-  canHandle: canHandleIntentRequest(CANCEL_INTENT, STOP_INTENT, PAUSE_TURN_INTENT),
+  canHandle: canHandleIntentRequest(PAUSE_TURN_INTENT),
 
   async handle(handlerInput) {
     const userId = getUserId(handlerInput)

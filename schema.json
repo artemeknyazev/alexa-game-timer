@@ -13,6 +13,10 @@
         {
           "name": "AMAZON.HelpIntent",
           "samples": [
+            "how to do it",
+            "how to",
+            "how it works",
+            "what to do",
             "how can i do it",
             "help"
           ]
@@ -20,7 +24,9 @@
         {
           "name": "AMAZON.StopIntent",
           "samples": [
-            "stop"
+            "stop",
+            "exit",
+            "close"
           ]
         },
         {
@@ -40,6 +46,7 @@
             }
           ],
           "samples": [
+            "stop timer",
             "pause",
             "pause turn",
             "pause {color} turn",
