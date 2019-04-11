@@ -43,7 +43,7 @@ You can:
   5. Install AWS CLI locally if not installed
   6. Log in to AWS CLI with the deployment user credentials
   7. Run `npm install --production` in the project root directory; note: without the `--production` flag it will install `jest` that will a) greatly increase the bundle size, and b) required only for testing
-  7. Run `scripts/publish-lambda.sh` to publish the function; note: if a script fails, check that you have the `zip` utility installed, and there is a `TMPDIR` environment variable that points to some temporary folder, like `/var/folders` or `/tmp`
+  7. Run `scripts/publish-lambda.sh` to publish the function; note: if the script fails, check that you have the `zip` utility installed, and there is a `TMPDIR` environment variable that points to some temporary folder, like `/var/folders` or `/tmp`
 
 ### Set up the Alexa Skill
 
