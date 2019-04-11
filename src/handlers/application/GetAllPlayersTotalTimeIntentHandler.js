@@ -1,6 +1,7 @@
 const { GET_ALL_PLAYERS_TOTAL_TIME_INTENT } = require('../../constants')
 const {
   canHandleIntentRequest,
+  getUserId,
   msToHuman,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
@@ -8,7 +9,7 @@ const { AppStateModel } = require('../../models')
 const GetAllPlayersTotalTimeIntentHandler = {
   canHandle: canHandleIntentRequest(GET_ALL_PLAYERS_TOTAL_TIME_INTENT),
 
-  handle(handlerInput) {
+  async handle(handlerInput) {
     const userId = getUserId(handlerInput)
     const times = await AppStateModel.getAllPlayersTotalTime(userId)
 
@@ -18,7 +19,7 @@ const GetAllPlayersTotalTimeIntentHandler = {
       return handlerInput.responseBuilder
         .speak(speechText)
         .reprompt(speechText)
-        .getResponse();
+        .getResponse()
     }
 
     const timesStr = keys
@@ -28,8 +29,8 @@ const GetAllPlayersTotalTimeIntentHandler = {
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = GetAllPlayersTotalTimeIntentHandler;
+module.exports = GetAllPlayersTotalTimeIntentHandler

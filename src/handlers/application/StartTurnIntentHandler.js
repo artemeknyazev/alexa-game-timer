@@ -17,17 +17,17 @@ const StartTurnIntentHandler = {
       return handlerInput.responseBuilder
         .speak(speechText)
         .reprompt(speechText)
-        .getResponse();
+        .getResponse()
     }
 
     await AppStateModel.markStartTurn(userId, color)
 
-    const speechText = `Marked the ${color} player's turn start`;
+    const speechText = `Marked the ${color} player's turn start`
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = StartTurnIntentHandler;
+module.exports = StartTurnIntentHandler

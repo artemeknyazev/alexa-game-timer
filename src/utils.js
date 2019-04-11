@@ -8,7 +8,7 @@ const humanizeDuration = require('humanize-duration')
  */
 function canHandleRequest(requestType) {
   return function (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === requestType;
+    return handlerInput.requestEnvelope.request.type === requestType
   }
 }
 
@@ -23,7 +23,7 @@ function canHandleIntentRequest(...intentNames) {
   return function (handlerInput) {
     return checkCanHandleRequest(handlerInput)
       && intentNames.some(intentName =>
-        handlerInput.requestEnvelope.request.intent.name === intentName);
+        handlerInput.requestEnvelope.request.intent.name === intentName)
   }
 }
 

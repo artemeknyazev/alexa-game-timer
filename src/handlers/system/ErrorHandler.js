@@ -1,17 +1,17 @@
 const ErrorHandler = {
   canHandle() {
-    return true;
+    return true
   },
 
   handle(handlerInput, error) {
-    console.log(`~~~~ Error handled: ${error.message}`);
-    const speechText = `Sorry, I couldn't understand what you said. Please try again.`;
+    console.log(`~~~~ Error handled: ${error.message}`) // eslint-disable-line no-console
+    const speechText = `Sorry, I couldn't understand what you said. Please try again.`
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = ErrorHandler;
+module.exports = ErrorHandler

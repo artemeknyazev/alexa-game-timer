@@ -5,14 +5,14 @@ const DebugHandler = {
   canHandle: canHandleRequest(INTENT_REQUEST),
 
   handle(handlerInput) {
-    const intentName = handlerInput.requestEnvelope.request.intent.name;
-    const speechText = `You just triggered ${intentName}`;
+    const intentName = handlerInput.requestEnvelope.request.intent.name
+    const speechText = `You just triggered ${intentName}`
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = DebugHandler;
+module.exports = DebugHandler

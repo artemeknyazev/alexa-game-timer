@@ -19,7 +19,8 @@ const START_TURN_INTENT = 'StartTurnIntent'
 const APP_STATE_TABLE = 'alexa_game_timer'
 
 // App states
-const APP_STATE_NEW_GAME = 'new_game' // only used for describing current state
+// TODO: refactor the state model to use this state for the new game state when there is no currentPlayer
+const APP_STATE_NEW_GAME = 'new_game' // only used for describing current state for now
 const APP_STATE_TURN_ONGOING = 'player_turn'
 const APP_STATE_TURN_PAUSED = 'paused'
 

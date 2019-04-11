@@ -41,36 +41,10 @@
             }
           ],
           "samples": [
-            "turn finish",
-            "turn end",
-            "turn stop",
-            "end turn",
-            "finish turn",
-            "stop turn",
-            "stop {color} time",
-            "stop {color} player time",
-            "stop {color} turn",
-            "stop {color} player turn",
-            "end {color} time",
-            "end {color} player time",
-            "end {color} turn",
-            "end {color} player turn",
-            "finish {color} time",
-            "finish {color} player time",
-            "finish {color} turn",
-            "finish {color} player turn",
-            "{color} stop",
-            "{color} player stop",
-            "{color} player stop time",
-            "{color} player stop turn",
-            "{color} end",
-            "{color} player end",
-            "{color} player end time",
-            "{color} player end turn",
-            "{color} finish",
-            "{color} player finish",
-            "{color} player finish time",
-            "{color} player finish turn"
+            "pause",
+            "pause turn",
+            "pause {color} turn",
+            "pause {color} player turn"
           ]
         },
         {
@@ -82,22 +56,9 @@
             }
           ],
           "samples": [
-            "start {color} time",
-            "start {color} player time",
+            "start {color}",
             "start {color} turn",
-            "start {color} player turn",
-            "begin {color} time",
-            "begin {color} player time",
-            "begin {color} turn",
-            "begin {color} player turn",
-            "{color} start",
-            "{color} player start",
-            "{color} player start time",
-            "{color} player start turn",
-            "{color} begin",
-            "{color} player begin",
-            "{color} player begin time",
-            "{color} player begin turn"
+            "start {color} player turn"
           ]
         },
         {
@@ -110,67 +71,36 @@
           ],
           "samples": [
             "{color} time",
-            "tell {color} player time",
-            "say {color} player time",
-            "tell {color} time",
-            "say {color} time",
-            "how much {color} player played",
-            "how much {color} played",
-            "what is {color} player time",
-            "what is {color} time",
-            "get {color} player time",
-            "get {color} time"
+            "{color} player time",
+            "{color} players time"
           ]
         },
         {
           "name": "GetAllPlayersTotalTimeIntent",
           "slots": [],
           "samples": [
-            "tell all time",
-            "say all time",
-            "say all players time",
+            "all time",
             "all players time",
+            "how much",
             "how much played",
-            "how much do we played",
-            "what is all time",
-            "what is all players time",
-            "get all players time",
-            "get all time"
+            "how much do we played"
           ]
         },
         {
           "name": "NewGameIntent",
           "slots": [],
           "samples": [
-            "stop session",
-            "end session",
-            "game clear",
-            "clear game",
-            "time stop",
-            "game remove",
-            "game finish",
-            "game stop",
-            "finish game",
-            "stop game",
             "new game",
-            "remove time",
-            "clear time",
-            "remove all",
-            "clear all",
-            "end game",
-            "end game session",
-            "remove all time",
-            "clear all time"
+            "end game"
           ]
         },
         {
           "name": "GetCurrentTurnTimeIntent",
           "slots": [],
           "samples": [
-            "what is current turn",
             "whose turn",
-            "whose turn is it",
-            "what is happening"
+            "what is happening",
+            "whats happening"
           ]
         },
         {

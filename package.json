@@ -13,7 +13,8 @@
   },
   "scripts": {
     "publish-lambda": "./scripts/publish-lambda.sh",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src/**"
   },
   "keywords": [
     "alexa",
@@ -22,6 +23,7 @@
   ],
   "devDependencies": {
     "deep-freeze": "0.0.1",
+    "eslint": "^5.16.0",
     "jest": "^24.7.1"
   },
   "repository": {

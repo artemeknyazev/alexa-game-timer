@@ -6,6 +6,8 @@ const {
 } = require('../../constants')
 const {
   canHandleIntentRequest,
+  getUserId,
+  getSlots,
   msToHuman,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
@@ -13,7 +15,7 @@ const { AppStateModel } = require('../../models')
 const GetCurrentTurnTimeIntentHandler = {
   canHandle: canHandleIntentRequest(GET_CURRENT_TURN_TIME_INTENT),
 
-  handle(handlerInput) {
+  async handle(handlerInput) {
     const userId = getUserId(handlerInput)
     const { color } = getSlots(handlerInput)
     if (!color) {
@@ -21,7 +23,7 @@ const GetCurrentTurnTimeIntentHandler = {
       return handlerInput.responseBuilder
         .speak(speechText)
         .reprompt(speechText)
-        .getResponse();
+        .getResponse()
     }
 
     const currentTurnTime = await AppStateModel.getCurrentTurnTime(userId)
@@ -41,8 +43,8 @@ const GetCurrentTurnTimeIntentHandler = {
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = GetCurrentTurnTimeIntentHandler;
+module.exports = GetCurrentTurnTimeIntentHandler

@@ -28,7 +28,7 @@ const {
 /**
  * DynamoDB client for querying/updating documents
  */
-const client = new AWS.DynamoDB.DocumentClient();
+const client = new AWS.DynamoDB.DocumentClient()
 
 /**
  * Acquire an application state from a DynamoDB table
@@ -41,8 +41,9 @@ function getByUserIdCb(userId, cb) {
     TableName: APP_STATE_TABLE,
     Key: { userId }
   }
+  // NOTE: we do not expose the whole object, just the `appState` part
   client.get(params, (err, data) =>
-    err ? cb(err) : cb(data.appState))
+    err ? cb(err) : cb(null, data.appState))
 }
 
 /**

@@ -19,8 +19,6 @@ const USER_ID = 'testuserid'
 const PLAYER_COLOR_RED = 'red'
 const PLAYER_COLOR_GREEN = 'green'
 
-const originalDateNow = () => Date.now()
-
 describe('`AppStateModel`', () => {
   beforeEach(() => {
     // Guards to prevent accidently calling DB

@@ -1,6 +1,8 @@
 const { GET_PLAYER_TOTAL_TIME_INTENT } = require('../../constants')
 const {
   canHandleIntentRequest,
+  getUserId,
+  getSlots,
   msToHuman,
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
@@ -8,7 +10,7 @@ const { AppStateModel } = require('../../models')
 const GetPlayerTotalTimeIntentHandler = {
   canHandle: canHandleIntentRequest(GET_PLAYER_TOTAL_TIME_INTENT),
 
-  handle(handlerInput) {
+  async handle(handlerInput) {
     const userId = getUserId(handlerInput)
     const { color } = getSlots(handlerInput)
     if (!color) {
@@ -16,17 +18,17 @@ const GetPlayerTotalTimeIntentHandler = {
       return handlerInput.responseBuilder
         .speak(speechText)
         .reprompt(speechText)
-        .getResponse();
+        .getResponse()
     }
 
     const totalTime = await AppStateModel.getPlayerTotalTime(userId, color)
 
-    const speechText = `The ${color} player's total time is ${msToHuman(totalTime)}`;
+    const speechText = `The ${color} player's total time is ${msToHuman(totalTime)}`
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = GetPlayerTotalTimeIntentHandler;
+module.exports = GetPlayerTotalTimeIntentHandler

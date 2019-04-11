@@ -6,8 +6,8 @@ const SessionEndedRequestHandler = {
 
   handle(handlerInput) {
     // Any cleanup logic goes here.
-    return handlerInput.responseBuilder.getResponse();
+    return handlerInput.responseBuilder.getResponse()
   }
-};
+}
 
-module.exports = SessionEndedRequestHandler;
+module.exports = SessionEndedRequestHandler

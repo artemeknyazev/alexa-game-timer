@@ -5,13 +5,13 @@ const LaunchRequestHandler = {
   canHandle: canHandleRequest(LAUNCH_REQUEST),
 
   handle(handlerInput) {
-    const speechText = 'Welcome to the Game Timer. Say Help to get more information';
+    const speechText = 'Welcome to the Game Timer. Say Help to get more information'
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = LaunchRequestHandler;
+module.exports = LaunchRequestHandler

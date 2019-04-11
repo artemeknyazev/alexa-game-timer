@@ -1,5 +1,5 @@
 // See also https://alexa.design/cookbook
-const Alexa = require('ask-sdk-core');
+const Alexa = require('ask-sdk-core')
 const {
   CancelAndStopIntentHandler,
   ContinueTurnIntentHandler,
@@ -14,7 +14,7 @@ const {
   PauseTurnIntentHandler,
   StartTurnIntentHandler,
   SessionEndedRequestHandler,
-} = require('./handlers');
+} = require('./handlers')
 
 exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
@@ -37,4 +37,4 @@ exports.handler = Alexa.SkillBuilders.custom()
     DebugHandler
   ).addErrorHandlers(
     ErrorHandler
-  ).lambda();
+  ).lambda()

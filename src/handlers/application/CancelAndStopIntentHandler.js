@@ -5,12 +5,12 @@ const CancelAndStopIntentHandler = {
   canHandle: canHandleIntentRequest(CANCEL_INTENT, STOP_INTENT),
 
   handle(handlerInput) {
-    const speechText = 'Goodbye!';
+    const speechText = 'Goodbye!'
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .getResponse();
+      .getResponse()
   }
-};
+}
 
-module.exports = CancelAndStopIntentHandler;
+module.exports = CancelAndStopIntentHandler
