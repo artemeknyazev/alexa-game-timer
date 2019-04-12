@@ -15,6 +15,12 @@ You can:
 * get who's turn is the current one and how much time passed by saying `whose turn`
 * exit by saying `cancel`, `stop`, or `go home`
 
+## Technologies used
+
+* AWS Lambda
+* AWS DynamoDB
+* Amazon Alexa
+
 ## Installation for development
 
 **Requirements:** You need to have accounts both at [Amazon Developer](https://developer.amazon.com) and [AWS](http://aws.amazon.com)
