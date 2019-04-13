@@ -15,7 +15,7 @@ const StartTurnIntentHandler = {
     const userId = getUserId(handlerInput)
     const { color } = getSlots(handlerInput)
     if (!color) {
-      const speechText = `I do not understand. Please say, ${emph('start red turn')}`
+      const speechText = `I do not understand. Please say, ${emph('“start red turn”')}`
       return speakAndReprompt(handlerInput, speechText)
     }
 

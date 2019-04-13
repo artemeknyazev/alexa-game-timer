@@ -20,12 +20,12 @@ const ContinueTurnIntentHandler = {
 
     let speechText = ''
     if (state === APP_STATE_NEW_GAME) {
-      speechText = `This is a new game. No turns have been made yet`
+      speechText = 'It\'s a new game. No turns have been made yet.'
     } else if (state === APP_STATE_TURN_ONGOING) {
-      speechText = `This turn is already in progress`
+      speechText = `This turn is already in progress.`
     } else if (state === APP_STATE_TURN_PAUSED) {
       await AppStateModel.markContinueTurn(userId)
-      speechText = `Continued the current turn`
+      speechText = `Continued the current turn.`
     } else {
       throw new Error(`ContinueTurnIntentHandler: unknown state ${state}`)
     }

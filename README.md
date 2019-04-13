@@ -10,7 +10,7 @@ You can:
 * pause a turn by saying `pause`
 * continue a paused turn by saying `continue`
 * clear remembered times and start a new game by saying `new game`
-* get total time for all players by saying `all time`
+* get total time for all players by saying `total time`
 * get player's total time by saying `{color} time`, like `red time`
 * get who's turn is the current one and how much time passed by saying `whose turn`
 * exit by saying `cancel`, `stop`, or `go home`

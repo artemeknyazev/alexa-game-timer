@@ -18,15 +18,22 @@ const GetAllPlayersTotalTimeIntentHandler = {
     const userId = getUserId(handlerInput)
     const { state } = await AppStateModel.describeCurrentState(userId)
     if (state === APP_STATE_NEW_GAME) {
-      const speechText = `This is a new game. No turns have been made yet`
+      const speechText = 'It\'s a new game. No turns have been made yet.'
       return speakAndReprompt(handlerInput, speechText)
     }
 
     const times = await AppStateModel.getAllPlayersTotalTime(userId)
     const colors = Object.keys(times)
-    const speechTexts = colors.map(color =>
-      `${color} player - ${msToHuman(times[color])}`)
-    const speechText = `Total times for all players are: ` + listToSpeech(speechTexts)
+    const totalTimeAllPlayers =
+      colors.reduce((totalTime, color) =>
+        totalTime + times[color], 0)
+    const totalTimePerPlayerTexts =
+      colors.map(color =>
+        `${color} player's — ${msToHuman(times[color])}`)
+    const speechText =
+      `You've been playing for ${msToHuman(totalTimeAllPlayers)}. ` +
+      'Total times for all players are: ' +
+      listToSpeech(totalTimePerPlayerTexts, ',')
     return speakAndReprompt(handlerInput, speechText)
   }
 }

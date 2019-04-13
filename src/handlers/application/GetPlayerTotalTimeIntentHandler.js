@@ -16,7 +16,7 @@ const GetPlayerTotalTimeIntentHandler = {
     const userId = getUserId(handlerInput)
     const { color } = getSlots(handlerInput)
     if (!color) {
-      const speechText = `I do not understand. Please say, ${emph('red player time')}`
+      const speechText = `I do not understand. Please say, ${emph('“red player time”')}`
       return speakAndReprompt(handlerInput, speechText)
     }
 

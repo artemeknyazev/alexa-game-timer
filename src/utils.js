@@ -96,10 +96,11 @@ function emphr(text) {
  * Concatenate a list of string into a speech output
  *
  * @param {Array<string>} list List of strings to concat
+ * @param {string} [sep=''] Separator. Defaults to an empty string
  * @param {number} [time=325] A pause time in ms
  */
-function listToSpeech(list, time = 325) {
-  return list.join(` <break time="${time}ms"/> `)
+function listToSpeech(list, sep = '', time = 325) {
+  return list.join(`${sep} <break time="${time}ms"/> `)
 }
 
 /**

@@ -12,9 +12,9 @@ const {
 } = require('../../utils')
 const { AppStateModel } = require('../../models')
 
-const WELCOME_MESSAGE = 'Welcome to the Game Timer'
-const HELP_MESSAGE = 'Say Help to get more information'
-const PREVIOUS_GAME_MESSAGE = `You've began a game previously. Say ${emph('whose turn')} to get more information`
+const WELCOME_MESSAGE = 'Welcome to the Game Timer.'
+const HELP_MESSAGE = `Say ${emph('“help”')} to get more information.`
+const PREVIOUS_GAME_MESSAGE = `You've began a game previously. Say ${emph('“whose turn”')} to get more information.`
 
 const LaunchRequestHandler = {
   canHandle: canHandleRequest(LAUNCH_REQUEST),
